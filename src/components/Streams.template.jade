@@ -1,0 +1,5 @@
+Grid(fluid)
+  h2(style="fontWeight: normal; fontSize: 30px;")= game.name
+  Row
+    each stream in streams
+      Stream(key="streams-#{stream._id}", stream=stream, endScrollTimeout=1000, selected=(stream._id === select_id))

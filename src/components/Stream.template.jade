@@ -1,0 +1,8 @@
+Col(md=6)
+  div(className=selected ? "stream-selected" : "stream", onMouseDown=this._select)
+    div(style="backgroundColor: #000;")
+      if (inViewport)
+        Player(ref="player", stream=stream)
+      else
+        Preview(ref="preview", image=image)
+    StreamInfo(stream=stream)

@@ -1,0 +1,6 @@
+ul.sidebar-nav
+  each top_game in top_games
+    - var game = top_game.game
+    - var selected = (game._id === selected_game._id);
+    li(key="games-#{top_game.game._id}", style=selected ? "backgroundColor: #555;" : undefined)
+      Game(game=game, viewers=top_game.viewers, channels=top_game.channels, selected=selected)

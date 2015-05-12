@@ -1,0 +1,13 @@
+div#wrapper(className=(menu ? undefiend: "toggled"))
+  div#sidebar-wrapper
+    Games
+  div#content-wrapper
+    div(style="display: block; position: fixed; marginTop: 8px; marginLeft: 8px;")
+      a(onClick=this._toggleMenu)
+        if (menu)
+          span.glyphicon.glyphicon-triangle-left(aria-hidden="true")
+        else
+          span.glyphicon.glyphicon-triangle-right(aria-hidden="true")
+
+    div(style="padding: 20px;")
+      Streams
