@@ -3,7 +3,7 @@ div#wrapper(className=(menu ? undefiend: "toggled"))
     Games
   div#content-wrapper
     div(style="display: block; position: fixed; marginTop: 8px; marginLeft: 8px;")
-      a(onClick=this._toggleMenu)
+      a(onClick=this.onToggleMenu.bind(this))
         if (menu)
           span.glyphicon.glyphicon-triangle-left(aria-hidden="true")
         else

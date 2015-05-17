@@ -1,4 +1,4 @@
-a(href="#", onClick=this._select).game-menu
+a(href="#", onClick=this.onSelect.bind(this)).game-menu
   img.game-image(src=game.box.small)
   div.game-info
     div.title= game.name

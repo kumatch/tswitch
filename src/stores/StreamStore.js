@@ -1,42 +1,42 @@
 'use strict';
 
-var Marty = require('marty');
+import Marty from 'marty';
+import constants from '../constants/streamConstants';
 
-var constants = require('../constants/streamsConstants');
+class StreamStore extends Marty.Store {
 
-var StreamsStore = Marty.createStore({
-    id: 'StreamsStore',
+    constructor(options) {
+        super(options);
 
-    handlers: {
-        load:  constants.LOAD_GAME_STREAMS,
-        select: constants.SELECT_STREAM
-    },
-
-    getInitialState: function () {
-        return {
+        this.state = {
             game: null,
             streams: [],
 
             select_id: null
         };
-    },
 
-    load: function (game, streams) {
+        this.handlers = {
+            load:  constants.LOAD_GAME_STREAMS,
+            select: constants.SELECT_STREAM
+        };
+    }
+
+    load(game, streams) {
         this.state.game = game;
         this.state.streams = streams;
         this.hasChanged();
-    },
+    }
 
-    select: function (stream_id) {
+    select(stream_id) {
         if (!stream_id) {
             this.state.select_id = null;
             this.hasChanged();
             return;
         }
 
-        var select_id;
+        let select_id;
 
-        this.state.streams.forEach(function (stream) {
+        this.state.streams.forEach((stream) => {
             if (stream._id === stream_id) {
                 select_id = stream_id;
             }
@@ -49,20 +49,21 @@ var StreamsStore = Marty.createStore({
             this.state.select_id = null;
             this.hasChanged();
         }
-    },
+    }
 
 
-    getGame: function () {
+
+    getGame() {
         return this.state.game;
-    },
+    }
 
-    getStreams: function () {
+    getStreams() {
         return this.state.streams;
-    },
+    }
 
-    getSelectedStreamId: function () {
+    getSelectedStreamId() {
         return this.state.select_id;
     }
-});
+};
 
-module.exports = StreamsStore;
+export default Marty.register(StreamStore, "StreamStore");

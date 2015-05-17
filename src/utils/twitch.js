@@ -1,24 +1,30 @@
-var request = require("axios");
+"use strict";
 
-var BASE_URL = "/api";
+import request from "axios";
 
-exports.fetchGames = function () {
-    var url = BASE_URL + "/games/top";
+const BASE_URL = "/api";
 
-    return request.get(url).then(function (res) {
-        return res.data.top_games;
-    });
+let twitch = {
+    fetchGames: () => {
+        let url = BASE_URL + "/games/top";
+
+        return request.get(url).then((res) => {
+            return res.data.top_games;
+        });
+    },
+
+    fetchGameStreams: (name) => {
+        let url = BASE_URL + "/streams";
+        let params = {
+            game: name
+        };
+
+        return request.get(url, {
+            params: params
+        }).then((res) => {
+            return res.data.streams;
+        });
+    }
 };
 
-exports.fetchGameStreams = function (name) {
-    var url = BASE_URL + "/streams";
-    var params = {
-        game: name
-    };
-
-    return request.get(url, {
-        params: params
-    }).then(function (res) {
-        return res.data.streams;
-    });
-};
+export default twitch;

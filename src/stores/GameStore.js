@@ -1,33 +1,31 @@
 'use strict';
 
-var Marty = require('marty');
+import Marty from "marty";
+import constants from "../constants/gameConstants";
 
-var constants = require('../constants/gamesConstants');
+class GameStore extends Marty.Store {
+    constructor(options) {
+        super(options);
 
-var GamesStore = Marty.createStore({
-    id: 'GamesStore',
-
-    handlers: {
-        load:   constants.LOAD_TOP_GAMES,
-        select: constants.SELECT_GAME
-    },
-
-    getInitialState: function () {
-        return {
+        this.state = {
             top_games: [],
             selected_game: null
         };
-    },
+        this.handlers = {
+            load:   constants.LOAD_TOP_GAMES,
+            select: constants.SELECT_GAME
+        };
+    }
 
-    load: function (top_games) {
+    load(top_games) {
         this.state.top_games = top_games;
         this.hasChanged();
-    },
+    }
 
-    select: function (game) {
-        var selected_game;
+    select(game) {
+        let selected_game;
 
-        this.state.top_games.forEach(function (top_game) {
+        this.state.top_games.forEach((top_game) => {
             if (top_game.game._id === game._id) {
                 selected_game = game;
             }
@@ -43,15 +41,15 @@ var GamesStore = Marty.createStore({
             this.state.selected_game = selected_game;
             this.hasChanged();
         }
-    },
+    }
 
-    getTopGames: function () {
+    getTopGames() {
         return this.state.top_games;
-    },
+    }
 
-    getSelectedGame: function () {
+    getSelectedGame() {
         return this.state.selected_game;
     }
-});
+}
 
-module.exports = GamesStore;
+export default Marty.register(GameStore, "GameStore");

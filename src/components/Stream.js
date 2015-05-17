@@ -1,22 +1,20 @@
 'use strict';
 
-var React = require('react');
-var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
+import React from 'react/addons';
+import { ScrollListenerMixin } from "react-scroll-components";
 
-var scrollComponents = require('react-scroll-components');
-var ScrollListenerMixin = scrollComponents.ScrollListenerMixin;
+import Preview from "./Preview";
+import Player from "./Player";
+import StreamInfo from "./StreamInfo";
 
-var Preview = require("./Preview.jsx");
-var Player = require("./Player.jsx");
-var StreamInfo = require("./StreamInfo.jsx");
+import streamActionCreators from '../actions/streamActionCreators';
 
-var streamsActionCreators = require('../actions/streamsActionCreators');
+import globals from "../common/globals";
+import template from "./Stream.template";
+let tmpl = template.locals(globals);
 
-var globals  = require("../common/globals");
-var template = require("./Stream.template").locals(globals);
-
-var Stream = React.createClass({
-    mixins: [ PureRenderMixin, ScrollListenerMixin ],
+let Stream = React.createClass({
+    mixins: [ React.addons.PureRenderMixin, ScrollListenerMixin ],
 
     propTypes: {
         stream: React.PropTypes.object.isRequired,
@@ -44,13 +42,11 @@ var Stream = React.createClass({
             StreamInfo: StreamInfo
         };
 
-        return template.call(this, values);
+        return tmpl.call(this, values);
     },
 
     componentDidMount: function () {
-        var self = this;
-
-        setTimeout(this.__updateViewport, 500);
+        setTimeout(this._updateViewport, 500);
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -67,25 +63,25 @@ var Stream = React.createClass({
     },
 
     onPageScrollEnd: function () {
-        this.__updateViewport();
+        this._updateViewport();
     },
 
-    _select: function (e) {
+    onSelect: function (e) {
         if (this.props.selected) {
             return;
         } else {
             e.preventDefault();
             e.stopPropagation();
 
-            streamsActionCreators.selectStream(this.props.stream);
+            streamActionCreators.for(this).selectStream(this.props.stream);
         }
     },
 
 
-    __updateViewport: function () {
-        var inViewport = this.__inViewport();
+    _updateViewport: function () {
+        var inViewport = this._inViewport();
         if (this.props.selected && !inViewport) {
-            streamsActionCreators.unselectStream();
+            streamActionCreators.for(this).unselectStream();
         }
 
         if (inViewport !== this.state.inViewport) {
@@ -95,7 +91,7 @@ var Stream = React.createClass({
         }
     },
 
-    __inViewport: function () {
+    _inViewport: function () {
         var dom = this.getDOMNode();
 
         var rect = dom.getBoundingClientRect();

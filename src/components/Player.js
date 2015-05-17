@@ -1,65 +1,58 @@
 'use strict';
 
-var React = require('react');
-var Marty = require('marty');
-var format = require("util").format;
+import React from 'react';
+import { format } from "util";
 
-var globals  = require("../common/globals");
-var template = require("./Player.template").locals(globals);
+import globals from "../common/globals";
+import template from "./Player.template";
+let tmpl = template.locals(globals);
 
-var Player = React.createClass({
-
-    propTypes: {
-        stream: React.PropTypes.object.isRequired
-    },
-
-    render: function () {
-        var stream = this.props.stream;
-
-        var values = {
+class Player extends React.Component {
+    render() {
+        let stream = this.props.stream;
+        let values = {
             stream_id: this.__createStreamId(stream)
         };
 
-        return template.call(this, values);
-    },
+        return tmpl.call(this, values);
+    }
 
+    componentDidMount() {
+        let stream = this.props.stream;
+        let channel = stream.channel;
+        let stream_id = this.__createStreamId(stream);
 
-    componentDidMount: function () {
-        var stream = this.props.stream;
-        var channel = stream.channel;
-        var stream_id = this.__createStreamId(stream);
-
-        var flashvars = {
+        let flashvars = {
             embed: 0,
             channel: channel.name,
             auto_play: "false",
             wmode: "transparent"
         };
 
-        var params = {
+        let params = {
             allowScriptAccess:"always",
             allowFullScreen:"false",
             wmode: "transparent",
             scale: "exactFit"
         };
 
-        var attributes = {
-        };
+        let attributes = { };
 
         swfobject.embedSWF("//www-cdn.jtvnw.net/swflibs/TwitchPlayer.swf", stream_id,
                            "100%", "100%", "11", null,
-                           flashvars, params, attributes, function (load) {
+
+                           flashvars, params, attributes, (load) => {
                                if (!load.success) {
                                    return;
                                }
 
-                               var player = load.ref;
+                               let player = load.ref;
 
                                function mute (player) {
                                    if (typeof player.mute === "function") {
                                        player.mute();
                                    } else {
-                                       setTimeout(function () {
+                                       setTimeout(() => {
                                            mute(player);
                                        }, 200);
                                    }
@@ -69,42 +62,46 @@ var Player = React.createClass({
                                    if (typeof player.playVideo === "function") {
                                        player.playVideo();
                                    } else {
-                                       setTimeout(function () {
+                                       setTimeout(() => {
                                            start(player);
                                        }, 200);
                                    }
                                }
 
-                               setTimeout(function () {
+                               setTimeout(() => {
                                    mute(player);
                                    start(player);
                                }, 200);
                            });
-    },
+    }
 
-
-    mute: function () {
-        var player = this.__getPlayer();
+    mute() {
+        let player = this.__getPlayer();
         if (player) {
             player.mute();
         }
-    },
+    }
 
-    unmute: function () {
-        var player = this.__getPlayer();
+    unmute() {
+        let player = this.__getPlayer();
         if (player) {
             player.unmute();
         }
-    },
+    }
 
-    __getPlayer: function () {
+    __getPlayer() {
         return swfobject.getObjectById(this.__createStreamId(this.props.stream));
-    },
+    }
 
-    __createStreamId: function (stream) {
-        var channel = stream.channel;
+    __createStreamId(stream) {
+        let channel = stream.channel;
+
         return format("twitch-streams-%s", channel.name);
     }
-});
+}
 
-module.exports = Player;
+Player.propTypes = {
+    stream: React.PropTypes.object.isRequired
+};
+
+export default Player;

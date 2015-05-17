@@ -1,8 +1,8 @@
-// global components
+"use strict";
 
-var Bootstrap = require("react-bootstrap");
+import Bootstrap from "react-bootstrap";
 
-module.exports = {
+export default {
     Grid: Bootstrap.Grid,
     Row: Bootstrap.Row,
     Col: Bootstrap.Col,

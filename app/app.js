@@ -1,10 +1,12 @@
-var express = require('express');
-var path = require('path');
-var compression = require('compression');
+"use strict";
 
-var twitch = require("../lib/twitch");
+import express from "express";
+import path from "path";
+import compression from "compression";
 
-var app = express();
+import twitch from "../lib/twitch";
+
+let app = express();
 
 app.disable("x-powered-by");
 app.use(compression());
@@ -12,22 +14,22 @@ app.use(express.static( path.join(__dirname, '../public') ));
 
 
 // routes
-app.get('/api/games/top', function (req, res, next) {
-    twitch.fetchTopGames().then(function (top_games) {
+app.get('/api/games/top', (req, res, next) => {
+    twitch.fetchTopGames().then((top_games) => {
         res.json({
             top_games: top_games
         });
     }, next);
 });
 
-app.get('/api/streams', function (req, res, next) {
-    var game_name = req.query.game || undefined;
-    if (!game_name) {
+app.get('/api/streams', (req, res, next) => {
+    let game = req.query.game || undefined;
+    if (!game) {
         next();
         return;
     }
 
-    twitch.fetchGameStreams(game_name).then(function (streams) {
+    twitch.fetchGameStreams(game).then((streams) => {
         res.json({
             streams: streams
         });
@@ -37,11 +39,12 @@ app.get('/api/streams', function (req, res, next) {
 
 
 /// catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
     if (req.url.match(/^\/api\//)) {
         res.status(404).send(null);
     } else {
-        var err = new Error('Not Found');
+        let err = new Error('Not Found');
+
         err.status = 404;
         next(err);
     }
@@ -49,11 +52,12 @@ app.use(function(req, res, next) {
 
 /// error handlers
 
-app.use(function(err, req, res, next) {
-    var body = { };
-    var status = err.status || 500;
+app.use((err, req, res, next) => {
+    let body = { };
+    let status = err.status || 500;
 
     if (app.get('env') === 'development') {
+        console.log(err.stack);
         body = {
             status: status,
             error: err,
@@ -69,4 +73,4 @@ app.use(function(err, req, res, next) {
     res.status(status).json(body);
 });
 
-module.exports = app;
+export default app;
