@@ -3,6 +3,7 @@
 import React from "react";
 import Marty from "marty";
 
+import Header from "./StreamHeader";
 import Stream from "./Stream";
 
 import StreamStore from "../stores/StreamStore";
@@ -18,10 +19,12 @@ class Streams extends React.Component {
         }
 
         let values = {
+            client: this.props.client,
             game: this.props.game,
             streams: this.props.streams,
             select_id: this.props.select_id,
 
+            Header: Header,
             Stream: Stream
         };
 

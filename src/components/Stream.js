@@ -19,6 +19,7 @@ let Stream = React.createClass({
     mixins: [ React.addons.PureRenderMixin, ScrollListenerMixin ],
 
     propTypes: {
+        client: React.PropTypes.object.isRequired,
         stream: React.PropTypes.object.isRequired,
         selected: React.PropTypes.bool.isRequired
     },
@@ -76,6 +77,10 @@ let Stream = React.createClass({
             e.preventDefault();
             e.stopPropagation();
 
+            this.setState({
+                inViewport: true
+            });
+
             streamActionCreators.for(this).selectStream(this.props.stream);
         }
     },
@@ -102,6 +107,10 @@ let Stream = React.createClass({
                 });
             }, DELAY_STOP);
         } else if (inViewport && !this.state.inViewport) {
+            if (!this.props.client.auto_play) {
+                return;
+            }
+
             this.setState({
                 inViewport: inViewport
             });

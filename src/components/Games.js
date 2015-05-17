@@ -27,7 +27,7 @@ class Games extends React.Component {
     componentDidMount() {
         gameActionCreators.for(this).loadTopGames();
     }
-};
+}
 
 export default Marty.createContainer(Games, {
     listenTo: [ GameStore ],
