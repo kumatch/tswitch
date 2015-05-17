@@ -13,6 +13,8 @@ import globals from "../common/globals";
 import template from "./Stream.template";
 let tmpl = template.locals(globals);
 
+const DELAY_STOP = 10 * 1000;
+
 let Stream = React.createClass({
     mixins: [ React.addons.PureRenderMixin, ScrollListenerMixin ],
 
@@ -23,7 +25,8 @@ let Stream = React.createClass({
 
     getInitialState: function () {
         return {
-            inViewport: false
+            inViewport: false,
+            timer: null
         };
     },
 
@@ -79,12 +82,26 @@ let Stream = React.createClass({
 
 
     _updateViewport: function () {
-        var inViewport = this._inViewport();
-        if (this.props.selected && !inViewport) {
-            streamActionCreators.for(this).unselectStream();
-        }
+        var self = this;
+        var selected = this.props.selected;
 
-        if (inViewport !== this.state.inViewport) {
+        var inViewport = this._inViewport();
+
+        if (!inViewport && this.state.inViewport) {
+            setTimeout( () => {
+                if (self._inViewport()) {
+                    return;
+                }
+
+                if (self.props.selected) {
+                    streamActionCreators.for(self).unselectStream();
+                }
+
+                self.setState({
+                    inViewport: false
+                });
+            }, DELAY_STOP);
+        } else if (inViewport && !this.state.inViewport) {
             this.setState({
                 inViewport: inViewport
             });
