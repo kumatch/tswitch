@@ -50,7 +50,7 @@ let Stream = React.createClass({
     },
 
     componentDidMount: function () {
-        setTimeout(this._updateViewport, 500);
+        this._updateViewport();
     },
 
     componentWillReceiveProps: function (nextProps) {

@@ -4,7 +4,7 @@ import React from 'react/addons';
 import ReactMixin from "react-mixin";
 import Viewers from "./Viewers";
 
-import gameActionCreators from "../actions/gameActionCreators";
+import clientActionCreators from "../actions/clientActionCreators";
 import streamActionCreators from "../actions/streamActionCreators";
 
 import globals from "../common/globals";
@@ -26,8 +26,8 @@ class Game extends React.Component {
     }
 
     onSelect(e) {
-        gameActionCreators.for(this).select(this.props.game);
-        streamActionCreators.for(this).selectGame(this.props.game);
+        clientActionCreators.for(this).selectGame(this.props.game);
+        streamActionCreators.for(this).loadGameStreams(this.props.game);
 
         e.preventDefault();
         e.stopPropagation();

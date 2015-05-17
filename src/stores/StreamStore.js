@@ -9,7 +9,7 @@ class StreamStore extends Marty.Store {
         super(options);
 
         this.state = {
-            game: null,
+            stream_game: {},
             streams: [],
 
             select_id: null
@@ -22,7 +22,7 @@ class StreamStore extends Marty.Store {
     }
 
     load(game, streams) {
-        this.state.game = game;
+        this.state.stream_game = game;
         this.state.streams = streams;
         this.hasChanged();
     }
@@ -53,8 +53,8 @@ class StreamStore extends Marty.Store {
 
 
 
-    getGame() {
-        return this.state.game;
+    getStreamGame() {
+        return this.state.stream_game;
     }
 
     getStreams() {

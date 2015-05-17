@@ -9,11 +9,15 @@ class ClientStore extends Marty.Store {
 
         this.state = {
             display_menu: true,
-            auto_play: false
+            auto_play: true,
+
+            select_game: {}
         };
+
         this.handlers = {
             toggleSiteMenu: constants.CLIENT_TOGGLE_SITE_MENU,
-            toggleAutoPlay: constants.CLIENT_TOGGLE_AUTO_PLAY
+            toggleAutoPlay: constants.CLIENT_TOGGLE_AUTO_PLAY,
+            selectGame: constants.CLIENT_SELECT_GAME
         };
     }
 
@@ -24,6 +28,11 @@ class ClientStore extends Marty.Store {
 
     toggleAutoPlay() {
         this.state.auto_play = !this.state.auto_play;
+        this.hasChanged();
+    }
+
+    selectGame(game) {
+        this.state.select_game = game;
         this.hasChanged();
     }
 

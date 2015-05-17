@@ -14,9 +14,12 @@ let tmpl = template.locals(globals);
 
 class Games extends React.Component {
     render() {
+        let client = this.props.client;
+        let select_game = client.select_game;
+
         let values = {
+            select_game: select_game,
             top_games: this.props.top_games,
-            selected_game: this.props.selected_game || {},
 
             Game: Game
         };
@@ -29,15 +32,17 @@ class Games extends React.Component {
     }
 }
 
+Games.propTypes = {
+    client: React.PropTypes.object.isRequired
+};
+
+
 export default Marty.createContainer(Games, {
     listenTo: [ GameStore ],
 
     fetch: {
         top_games() {
             return GameStore.for(this).getTopGames();
-        },
-        selected_game() {
-            return GameStore.for(this).getSelectedGame();
         }
     },
 

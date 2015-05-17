@@ -14,14 +14,19 @@ let tmpl = template.locals(globals);
 
 class Streams extends React.Component {
     render() {
-        if (!this.props.game || !this.props.streams.length) {
-            return <span />;
+        let client = this.props.client;
+        let select_game = client.select_game;
+        let streams = [];
+
+        if (select_game._id === this.props.stream_game._id) {
+            streams = this.props.streams;
         }
 
+
         let values = {
-            client: this.props.client,
-            game: this.props.game,
-            streams: this.props.streams,
+            client: client,
+            game: select_game,
+            streams: streams,
             select_id: this.props.select_id,
 
             Header: Header,
@@ -32,13 +37,16 @@ class Streams extends React.Component {
     }
 }
 
+Streams.propTypes = {
+    client: React.PropTypes.object.isRequired
+};
 
 export default Marty.createContainer(Streams, {
     listenTo: [ StreamStore ],
 
     fetch: {
-        game() {
-            return StreamStore.for(this).getGame();
+        stream_game() {
+            return StreamStore.for(this).getStreamGame();
         },
 
         streams() {

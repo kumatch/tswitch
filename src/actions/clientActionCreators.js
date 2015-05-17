@@ -12,6 +12,10 @@ class ClientActionCreators extends Marty.ActionCreators {
     toggleAutoPlay() {
         this.dispatch(constants.CLIENT_TOGGLE_AUTO_PLAY);
     }
+
+    selectGame(game) {
+        this.dispatch(constants.CLIENT_SELECT_GAME, game);
+    }
 }
 
 export default Marty.register(ClientActionCreators, "ClientActionCreators");
