@@ -1,5 +1,11 @@
-Grid(fluid)
-  h2(style="fontWeight: normal; fontSize: 30px;")= game.name
-  Row
-    each stream in streams
-      Stream(key="streams-#{stream._id}", stream=stream, endScrollTimeout=1000, selected=(stream._id === select_id))
+div
+  if (streams.length)
+    Header(client=client)
+
+  Grid(fluid, style="padding: 40px 20px;")
+    if (game)
+      h2(style="fontWeight: normal; fontSize: 30px;")= game.name
+    if (streams.length)
+      Row
+        each stream in streams
+          Stream(key="streams-#{stream._id}", client=client, stream=stream, endScrollTimeout=1000, selected=(stream._id === select_id))

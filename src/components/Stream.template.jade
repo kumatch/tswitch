@@ -1,6 +1,6 @@
 Col(md=6)
   div(className=selected ? "stream-selected" : "stream", onMouseDown=this.onSelect)
-    div(style="backgroundColor: #000;")
+    div(style="backgroundColor: #777; width: 100%").embed-responsive.embed-responsive-16by9
       if (inViewport)
         Player(ref="player", stream=stream)
       else

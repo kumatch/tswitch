@@ -3,6 +3,5 @@
 import Marty from "marty";
 
 export default Marty.createConstants([
-    'LOAD_TOP_GAMES',
-    'SELECT_GAME'
+    'LOAD_TOP_GAMES'
 ]);

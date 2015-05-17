@@ -6,8 +6,8 @@ import constants from "../constants/streamConstants";
 
 class StreamActionCreators extends Marty.ActionCreators {
 
-    selectGame(game) {
-        twitch.fetchGameStreams(game.name).then((streams) => {
+    loadGameStreams(game) {
+        twitch.fetchGameStreams(game.name).then(streams => {
             this.dispatch(constants.LOAD_GAME_STREAMS, game, streams);
         });
     }
