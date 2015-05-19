@@ -4,18 +4,19 @@ var babel = require("gulp-babel");
 var reactJade = require('gulp-react-jade');
 var watch = require("gulp-watch");
 var watchify = require('gulp-watchify');
-var reactify = require('reactify');
+var babelify = require('babelify');
 var streamify = require("gulp-streamify");
 var uglify = require('gulp-uglify');
 var livereload = require('gulp-livereload');
 var runSequence = require('run-sequence');
+var rimraf = require("rimraf");
 
 var argv = require("yargs").argv;
 var production = argv.production ? true : false;
 var watching = false;
 
 gulp.task("build", function (callback) {
-    runSequence("build:common", "build:browserify", callback);
+    runSequence("build:clean", "build:common", "build:browserify", callback);
 });
 
 gulp.task("build:common", [
@@ -24,14 +25,17 @@ gulp.task("build:common", [
     'build:react-jade'
 ]);
 
+gulp.task('build:clean', function (callback) {
+    rimraf('build', callback);
+});
+
 gulp.task('build:js', function () {
     var src = [
         "src/**/*.js",
-        "!src/**/.#*.js"
+        "!src/**/.*.js"
     ];
 
     return gulp.src(src)
-        .pipe(babel())
         .pipe(gulp.dest('build'));
 });
 
@@ -61,17 +65,17 @@ gulp.task('build:react-jade', function () {
 });
 
 
-gulp.task("build:browserify", watchify(function (watchify) {
+gulp.task("build:browserify", watchify(function (bundle) {
     var src = [
         "build/app.js"
     ];
 
     var b = gulp.src(src)
-        .pipe(watchify({
+        .pipe(bundle({
             watch: watching,
             debug: !production,
             setup: function (bundle) {
-                bundle.transform(reactify);
+                bundle.transform(babelify);
             }
         }));
 
@@ -91,8 +95,7 @@ gulp.task('enable-watch-mode', function () {
 
 gulp.task('watch', function () {
     runSequence("enable-watch-mode", "build", function () {
-
-        watch([ "src/**/*.js", "!src/**/.#*.js"] , function () {
+        watch([ "src/**/*.js", "!src/**/.*.js"] , function () {
             gulp.start("build:js");
         });
 
@@ -103,9 +106,5 @@ gulp.task('watch', function () {
         watch([ "src/**/*.template.jade" ], function () {
             gulp.start("build:react-jade");
         });
-
-        // gulp.watch(, ['build:js']);
-        // gulp.watch([ "templates/**/*.jade" ],         ['build:html']);
-        // gulp.watch([  ],      ['build:react-jade']);
     });
 });
