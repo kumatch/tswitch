@@ -2,14 +2,20 @@
 
 import Marty from "marty";
 import constants from "../constants/clientConstants";
+import storage from "../utils/storage";
 
 class ClientStore extends Marty.Store {
     constructor(options) {
         super(options);
 
+        let auto_play = parseInt(storage.get("auto_play"), 10);
+        if (typeof auto_play === "undefined") {
+            auto_play = 1;
+        }
+
         this.state = {
             display_menu: true,
-            auto_play: true,
+            auto_play: auto_play ? true : false,
 
             select_game: {}
         };
@@ -28,6 +34,9 @@ class ClientStore extends Marty.Store {
 
     toggleAutoPlay() {
         this.state.auto_play = !this.state.auto_play;
+
+        storage.set("auto_play", this.state.auto_play ? 1 : 0);
+
         this.hasChanged();
     }
 

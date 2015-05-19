@@ -14,10 +14,12 @@
     "babel": "^5.4.3",
     "bluebird": "^2.9.25",
     "compression": "^1.4.3",
+    "cookie-cutter": "^0.1.1",
     "express": "^4.12.3",
     "react-mixin": "^1.2.2"
   },
   "devDependencies": {
+    "babelify": "^6.1.1",
     "browserify": "^9.0.8",
     "gulp": "^3.8.11",
     "gulp-babel": "^5.1.0",
@@ -35,8 +37,8 @@
     "react": "^0.13.2",
     "react-bootstrap": "^0.21.2",
     "react-scroll-components": "^0.2.2",
-    "reactify": "^1.1.0",
     "require-dir": "^0.3.0",
+    "rimraf": "^2.3.3",
     "run-sequence": "^1.1.0",
     "setimmediate": "^1.0.2",
     "watchify": "^3.2.1",

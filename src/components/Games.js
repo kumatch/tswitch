@@ -20,7 +20,6 @@ class Games extends React.Component {
         let values = {
             select_game: select_game,
             top_games: this.props.top_games,
-
             Game: Game
         };
 

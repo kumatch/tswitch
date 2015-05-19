@@ -19,6 +19,7 @@ gulp.task('vendor:fonts', function() {
 gulp.task('vendor:css', function() {
     var styles = [
         "bower_components/bootstrap/dist/css/bootstrap.css",
+        "bower_components/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css",
         "imports/startbootstrap-simple-sidebar/css/simple-sidebar.css"
     ];
 

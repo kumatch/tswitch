@@ -21,11 +21,8 @@ class StreamHeader extends React.Component {
         clientActionCreators.for(this).toggleSiteMenu();
     }
 
-    onToggleAutoPlay(e) {
+    onToggleAutoPlay() {
         clientActionCreators.for(this).toggleAutoPlay();
-
-        e.preventDefault();
-        e.stopPropagation();
     }
 }
 

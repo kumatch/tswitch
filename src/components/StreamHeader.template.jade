@@ -5,11 +5,8 @@ div.streams-header
         span.glyphicon.glyphicon-triangle-left
       else
         span.glyphicon.glyphicon-triangle-right
-
   div.pull-left.streams-header-col
-    b.pull-left(style="padding: 0 8px;") Auto Play
-    div.onoffswitch.pull-left(onClick=this.onToggleAutoPlay.bind(this))
-      input#switch-autoplay.onoffswitch-checkbox(type="checkbox", name="onoffswitch", checked=client.auto_play, readOnly)
-      label.onoffswitch-label(for="switch-autoplay")
-        span.onoffswitch-inner
-        span.onoffswitch-switch
+    div.checkbox.checkbox-inline.checkbox-primary(onClick=this.onToggleAutoPlay.bind(this))
+      input#switch-autoplay(type="checkbox", checked=client.auto_play, readOnly)
+      label
+        b Auto play
