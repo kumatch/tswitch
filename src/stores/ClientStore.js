@@ -8,8 +8,11 @@ class ClientStore extends Marty.Store {
     constructor(options) {
         super(options);
 
-        let auto_play = parseInt(storage.get("auto_play"), 10);
-        if (typeof auto_play === "undefined") {
+        let auto_play = storage.get("auto_play");
+
+        if (typeof auto_play !== "undefined") {
+            auto_play = parseInt(auto_play) || 0;
+        } else {
             auto_play = 1;
         }
 
