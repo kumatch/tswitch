@@ -7,6 +7,11 @@ div.streams-header
         span.glyphicon.glyphicon-triangle-right
   div.pull-left.streams-header-col
     div.checkbox.checkbox-inline.checkbox-primary(onClick=this.onToggleAutoPlay.bind(this))
-      input#switch-autoplay(type="checkbox", checked=client.auto_play, readOnly)
+      input(type="checkbox", checked=client.auto_play, readOnly)
       label
         b Auto play
+  div.pull-left.streams-header-col
+    div.checkbox.checkbox-inline.checkbox-primary(onClick=this.onToggleMixSounds.bind(this))
+      input(type="checkbox", checked=client.mix_sounds, readOnly)
+      label
+        b Mix sounds

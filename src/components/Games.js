@@ -18,6 +18,7 @@ class Games extends React.Component {
         let select_game = client.select_game;
 
         let values = {
+            client: client,
             select_game: select_game,
             top_games: this.props.top_games,
             Game: Game

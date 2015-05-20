@@ -8,6 +8,7 @@ import template from "./Player.template";
 let tmpl = template.locals(globals);
 
 class Player extends React.Component {
+
     render() {
         let stream = this.props.stream;
         let values = {
@@ -21,6 +22,7 @@ class Player extends React.Component {
         let stream = this.props.stream;
         let channel = stream.channel;
         let stream_id = this.__createStreamId(stream);
+        let sound = this.props.sound;
 
         let flashvars = {
             embed: 0,
@@ -50,7 +52,11 @@ class Player extends React.Component {
 
                                function mute (player) {
                                    if (typeof player.mute === "function") {
-                                       player.mute();
+                                       if (sound) {
+                                           player.unmute();
+                                       } else {
+                                           player.mute();
+                                       }
                                    } else {
                                        setTimeout(() => {
                                            mute(player);

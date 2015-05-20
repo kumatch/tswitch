@@ -8,4 +8,4 @@ div
     if (streams.length)
       Row
         each stream in streams
-          Stream(key="streams-#{stream._id}", client=client, stream=stream, endScrollTimeout=1000, selected=(stream._id === select_id))
+          Stream(key="streams-#{stream._id}", client=client, stream=stream, endScrollTimeout=300)

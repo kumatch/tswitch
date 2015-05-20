@@ -22,7 +22,6 @@ class Streams extends React.Component {
             streams = this.props.streams;
         }
 
-
         let values = {
             client: client,
             game: select_game,

@@ -24,6 +24,10 @@ class StreamHeader extends React.Component {
     onToggleAutoPlay() {
         clientActionCreators.for(this).toggleAutoPlay();
     }
+
+    onToggleMixSounds() {
+        clientActionCreators.for(this).toggleMixSounds();
+    }
 }
 
 export default StreamHeader;
