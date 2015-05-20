@@ -26,7 +26,6 @@ class Streams extends React.Component {
             client: client,
             game: select_game,
             streams: streams,
-            select_id: this.props.select_id,
 
             Header: Header,
             Stream: Stream
@@ -50,10 +49,6 @@ export default Marty.createContainer(Streams, {
 
         streams() {
             return StreamStore.for(this).getStreams();
-        },
-
-        select_id() {
-            return StreamStore.for(this).getSelectedStreamId();
         }
     },
 
