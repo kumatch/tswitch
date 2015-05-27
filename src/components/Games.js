@@ -10,7 +10,8 @@ import GameStore from "../stores/GameStore";
 
 import globals from "../common/globals";
 import template from "./Games.template";
-let tmpl = template.locals(globals);
+const tmpl = template.locals(globals);
+
 
 class Games extends React.Component {
     render() {
@@ -29,6 +30,10 @@ class Games extends React.Component {
 
     componentDidMount() {
         gameActionCreators.for(this).loadTopGames();
+
+        setInterval( () => {
+            gameActionCreators.for(this).loadTopGames();
+        }, 20 * 1000);
     }
 }
 
