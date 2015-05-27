@@ -17,8 +17,8 @@ class ClientActionCreators extends Marty.ActionCreators {
         this.dispatch(constants.CLIENT_TOGGLE_MIX_SOUNDS);
     }
 
-    selectGame(game) {
-        this.dispatch(constants.CLIENT_SELECT_GAME, game);
+    selectGame(name) {
+        this.dispatch(constants.CLIENT_SELECT_GAME, name);
     }
 
     selectStream(stream) {

@@ -1,5 +1,3 @@
-div#wrapper(className=(client.display_menu ? undefiend: "toggled"))
-  div#sidebar-wrapper
-    Games(client=client)
-  div#content-wrapper
-    Streams(client=client)
+Locations
+  Location(path="/", handler=Contents)
+  Location(path="/games/:game_name", handler=Contents)

@@ -15,16 +15,15 @@ let tmpl = template.locals(globals);
 class Streams extends React.Component {
     render() {
         let client = this.props.client;
-        let select_game = client.select_game;
         let streams = [];
 
-        if (select_game._id === this.props.stream_game._id) {
+        if (client.isSelectedGame(this.props.stream_game.name)) {
             streams = this.props.streams;
         }
 
         let values = {
             client: client,
-            game: select_game,
+            game_name: client.select_game,
             streams: streams,
 
             Header: Header,

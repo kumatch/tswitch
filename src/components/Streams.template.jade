@@ -3,8 +3,8 @@ div
     Header(client=client)
 
   Grid(fluid, style="padding: 40px 20px;")
-    if (game)
-      h2(style="fontWeight: normal; fontSize: 30px;")= game.name
+    if (game_name)
+      h2(style="fontWeight: normal; fontSize: 30px;")= game_name
     if (streams.length)
       Row
         each stream in streams

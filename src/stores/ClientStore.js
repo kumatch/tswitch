@@ -11,7 +11,7 @@ class Client {
         this.auto_play = params.auto_play ? true : false;
         this.mix_sounds = params.mix_sounds ? true : false;
 
-        this.select_game = {};
+        this.select_game = null;
         this.select_streams = [];
     }
 
@@ -27,16 +27,20 @@ class Client {
         this.mix_sounds = !this.mix_sounds;
     }
 
-    isSelectedGame(game) {
-        return this.select_game._id === game._id;
+    isSelectedGame(name) {
+        if (!this.select_game) {
+            return false;
+        }
+
+        return this.select_game === name;
     }
 
     isSelectedStream(stream) {
         return _.findWhere(this.select_streams, { _id: stream._id }) ? true : false;
     }
 
-    selectGame(game) {
-        this.select_game = game;
+    selectGame(name) {
+        this.select_game = name;
     }
 
     selectStream(stream) {
@@ -106,8 +110,8 @@ class ClientStore extends Marty.Store {
         this.hasChanged();
     }
 
-    selectGame(game) {
-        this.state.client.selectGame(game);
+    selectGame(name) {
+        this.state.client.selectGame(name);
         this.hasChanged();
     }
 

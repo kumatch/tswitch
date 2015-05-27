@@ -1,19 +1,26 @@
 "use strict";
 
 import express from "express";
+import fs from "fs";
 import path from "path";
 import compression from "compression";
 
 import twitch from "../lib/twitch";
 
-let app = express();
+const app = express();
 
 app.disable("x-powered-by");
 app.use(compression());
 app.use(express.static( path.join(__dirname, '../public') ));
 
-
 // routes
+const index = fs.readFileSync(path.join(__dirname, '../public', 'index.html'));
+app.get('/games/:game_name', function (req, res) {
+    res.set('Content-Type', 'text/html');
+    res.send(index);
+});
+
+
 app.get('/api/games/top', (req, res, next) => {
     twitch.fetchTopGames().then((top_games) => {
         res.json({

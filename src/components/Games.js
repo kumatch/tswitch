@@ -15,12 +15,8 @@ const tmpl = template.locals(globals);
 
 class Games extends React.Component {
     render() {
-        let client = this.props.client;
-        let select_game = client.select_game;
-
         let values = {
-            client: client,
-            select_game: select_game,
+            client: this.props.client,
             top_games: this.props.top_games,
             Game: Game
         };

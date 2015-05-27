@@ -1,42 +1,19 @@
 'use strict';
 
 import React from "react";
-import Marty from "marty";
+import { Locations, Location } from "react-router-component";
 
-import Games from "./Games";
-import Streams from "./Streams";
-
-import ClientStore from "../stores/ClientStore";
-
-import globals from "../common/globals";
-import template from "./App.template";
-let tmpl = template.locals(globals);
+import Contents from "./Contents";
 
 class App extends React.Component {
     render() {
-        return tmpl.call(this, {
-            client: this.props.client,
-
-            Games: Games,
-            Streams: Streams
-        });
+        return (
+            <Locations>
+                <Location path="/" handler={Contents} />
+                <Location path="/games/:game_name" handler={Contents} />
+            </Locations>
+        );
     }
 }
 
-export default Marty.createContainer(App, {
-    listenTo: [ ClientStore ],
-
-    fetch: {
-        client() {
-            return ClientStore.for(this).getClient();
-        }
-    },
-
-    pending: function () {
-        return <div className='loading'>Loading...</div>;
-    },
-
-    failed: function(errors) {
-        return <div className='error'>Failed to load client. {errors}</div>;
-    }
-});
+export default App;
