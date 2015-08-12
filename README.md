@@ -1,5 +1,5 @@
 # tswitch - Twitch player.
 
-Play Twitch streams multiple.
+Multiple Twitch viewer.
 
 [http://tswitch.herokuapp.com/](http://tswitch.herokuapp.com/)
