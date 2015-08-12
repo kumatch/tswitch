@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.5.4",
-    "babel": "^5.4.3",
+    "babel": "^5.8.21",
     "bluebird": "^2.9.25",
     "compression": "^1.4.3",
     "cookie-cutter": "^0.1.1",

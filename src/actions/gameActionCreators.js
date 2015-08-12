@@ -6,9 +6,19 @@ import constants from "../constants/gameConstants";
 
 class GameActionCreators extends Marty.ActionCreators {
 
-    loadTopGames() {
-        twitch.fetchGames().then((top_games) => {
+    loadTopGames(offset = 0) {
+        const limit = 30;
+
+        twitch.fetchGames(limit, offset).then((top_games) => {
             this.dispatch(constants.LOAD_TOP_GAMES, top_games);
+
+            if (top_games.length >= limit - 5) {
+                offset += 25;
+
+                setTimeout(() => {
+                    this.loadTopGames(offset);
+                }, 200);
+            }
         });
     }
 

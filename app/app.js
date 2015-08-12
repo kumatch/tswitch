@@ -9,6 +9,11 @@ import twitch from "../lib/twitch";
 
 const app = express();
 
+function isNumeric(str) {
+    return (str + "").match(/^[0-9]+$/);
+}
+
+
 app.disable("x-powered-by");
 app.use(compression());
 app.use(express.static( path.join(__dirname, '../public') ));
@@ -22,7 +27,10 @@ app.get('/games/:game_name', function (req, res) {
 
 
 app.get('/api/games/top', (req, res, next) => {
-    twitch.fetchTopGames().then((top_games) => {
+    const limit  = isNumeric(req.query.limit)  ? +req.query.limit : 30;
+    const offset = isNumeric(req.query.offset) ? +req.query.offset : 0;
+
+    twitch.fetchTopGames(limit, offset).then((top_games) => {
         res.json({
             top_games: top_games
         });

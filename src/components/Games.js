@@ -29,7 +29,7 @@ class Games extends React.Component {
 
         setInterval( () => {
             gameActionCreators.for(this).loadTopGames();
-        }, 20 * 1000);
+        }, 60 * 1000);
     }
 }
 

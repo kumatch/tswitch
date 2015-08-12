@@ -1,12 +1,13 @@
 "use strict";
 
 import request from "axios";
+import { format } from "util";
 
 const BASE_URL = "/api";
 
 let twitch = {
-    fetchGames: () => {
-        let url = BASE_URL + "/games/top";
+    fetchGames: (limit, offset) => {
+        const url = format(BASE_URL + "/games/top?limit=%s&offset=%s", limit, offset);
 
         return request.get(url).then((res) => {
             return res.data.top_games;
@@ -14,8 +15,8 @@ let twitch = {
     },
 
     fetchGameStreams: (name) => {
-        let url = BASE_URL + "/streams";
-        let params = {
+        const url = BASE_URL + "/streams";
+        const params = {
             game: name
         };
 

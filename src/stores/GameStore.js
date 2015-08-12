@@ -1,5 +1,6 @@
 'use strict';
 
+import _ from "lodash";
 import Marty from "marty";
 import constants from "../constants/gameConstants";
 
@@ -8,7 +9,7 @@ class GameStore extends Marty.Store {
         super(options);
 
         this.state = {
-            top_games: []
+            top_games: {}
         };
         this.handlers = {
             load:   constants.LOAD_TOP_GAMES
@@ -16,12 +17,21 @@ class GameStore extends Marty.Store {
     }
 
     load(top_games) {
-        this.state.top_games = top_games;
+        top_games.forEach((top_game) => {
+            console.log(top_game);
+            let game = top_game.game;
+            this.state.top_games[game._id] = top_game;
+        });
         this.hasChanged();
     }
 
     getTopGames() {
-        return this.state.top_games;
+        return _.chain(this.state.top_games)
+                .values()
+                .sortBy((top_game) => {
+                    return top_game.viewers * -1;
+                })
+                .value();
     }
 }
 
