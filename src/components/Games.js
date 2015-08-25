@@ -1,5 +1,3 @@
-'use strict';
-
 import React from "react";
 import Marty from "marty";
 
@@ -8,20 +6,28 @@ import Game from "./Game";
 import gameActionCreators from "../actions/gameActionCreators";
 import GameStore from "../stores/GameStore";
 
-import globals from "../common/globals";
-import template from "./Games.template";
-const tmpl = template.locals(globals);
-
-
 class Games extends React.Component {
     render() {
-        let values = {
-            client: this.props.client,
-            top_games: this.props.top_games,
-            Game: Game
-        };
+        const top_games = this.props.top_games;
+        const client = this.props.client;
 
-        return tmpl.call(this, values);
+        let items = [];
+
+        top_games.forEach((top_game, index) => {
+            const game = top_game.game;
+            const selected = client.isSelectedGame(game.name);
+            const style = selected ? { backgroundColor: "#555" } : undefined;
+
+            if (game && game.name) {
+                items.push(<li key={"games-" + game._id} style={style}>
+                  <Game client={client} game={game} viewers={top_game.viewers} channels={top_game.channels} />
+                </li>);
+            }
+        });
+
+        return (<ul className="sidebar-nav">
+            {items}
+        </ul>);
     }
 
     componentDidMount() {

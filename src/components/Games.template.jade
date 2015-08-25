@@ -1,7 +1,0 @@
-ul.sidebar-nav
-  each top_game, index in top_games
-    - var game = top_game.game
-    - var selected = client.isSelectedGame(game.name)
-    if game && game.name
-      li(key="games-#{top_game.game._id}", style=selected ? "backgroundColor: #555;" : undefined)
-        Game(client=client, game=game, viewers=top_game.viewers, channels=top_game.channels)

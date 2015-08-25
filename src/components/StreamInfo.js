@@ -1,29 +1,23 @@
-'use strict';
-
 import React from 'react/addons';
 import ReactMixin from "react-mixin";
 
 import Viewers from "./Viewers";
 
-import globals from "../common/globals";
-import template from "./StreamInfo.template";
-let tmpl = template.locals(globals);
-
 class StreamInfo extends React.Component {
     render() {
-        let stream = this.props.stream;
-        let owner = stream.channel.name;
-        let viewers = stream.viewers;
+        const stream = this.props.stream;
+        const owner = stream.channel.name;
+        const viewers = stream.viewers;
+        const title = stream.channel.status;
 
-        let values = {
-            title: stream.channel.status,
-            owner: owner,
-            viewers: viewers,
-
-            Viewers: Viewers
-        };
-
-        return tmpl.call(this, values);
+        return (<div>
+            <h4 className="title">{title}</h4>
+            <p>
+                <Viewers value={viewers} />
+                <span>&nbsp;on&nbsp;</span>
+                <span>{owner}</span>
+            </p>
+        </div>);
     }
 }
 

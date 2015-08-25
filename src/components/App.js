@@ -1,5 +1,3 @@
-'use strict';
-
 import React from "react";
 import { Locations, Location } from "react-router-component";
 

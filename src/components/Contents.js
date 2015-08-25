@@ -1,5 +1,3 @@
-'use strict';
-
 import React from "react";
 import Marty from "marty";
 
@@ -9,16 +7,18 @@ import Streams from "./Streams";
 import clientActionCreators from "../actions/clientActionCreators";
 import ClientStore from "../stores/ClientStore";
 
-import globals from "../common/globals";
-import template from "./Contents.template";
-let tmpl = template.locals(globals);
-
 class Contents extends React.Component {
     render() {
-        return tmpl.call(this, {
-            client: this.props.client,
-            Games: Games, Streams: Streams
-        });
+        const client = this.props.client;
+
+        return (<div id="wrapper" className={client.display_menu ? undefined : "toggled"}>
+            <div id="sidebar-wrapper">
+              <Games client={client} />
+            </div>
+            <div id="content-wrapper">
+              <Streams client={client} />
+            </div>
+        </div>);
     }
 
     componentDidMount() {

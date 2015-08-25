@@ -1,7 +1,6 @@
-'use strict';
-
 import React from 'react/addons';
 import { ScrollListenerMixin } from "react-scroll-components";
+import { Col } from "react-bootstrap";
 
 import Preview from "./Preview";
 import Player from "./Player";
@@ -9,10 +8,6 @@ import StreamInfo from "./StreamInfo";
 
 import clientActionCreators from '../actions/clientActionCreators';
 import streamActionCreators from '../actions/streamActionCreators';
-
-import globals from "../common/globals";
-import template from "./Stream.template";
-let tmpl = template.locals(globals);
 
 const DELAY_STOP = 10 * 1000;
 
@@ -40,24 +35,24 @@ let Stream = React.createClass({
     },
 
     render: function () {
-        var client = this.props.client;
-        var stream = this.props.stream;
-        var image  = stream.preview.medium;
+        const stream = this.props.stream;
+        const image  = stream.preview.medium;
 
-        var values = {
-            selected: this.state.selected,
-            play: this.state.play,
-            preview: this.state.preview,
+        let streamDom;
+        if (this.state.play) {
+            streamDom = <Player ref="player" stream={stream} sound={this.state.selected ? true : false} />;
+        } else if (this.state.preview) {
+            streamDom = <Preview ref="preview" image={image} />;
+        }
 
-            stream: stream,
-            image: image,
-
-            Preview: Preview,
-            Player: Player,
-            StreamInfo: StreamInfo
-        };
-
-        return tmpl.call(this, values);
+        return (<Col md={6}>
+            <div className={this.state.selected ? "stream-selected" : "stream"} onMouseDown={this.onSelect}>
+                <div style={{ backgroundColor: "#777", width: "100%" }} className="embed-responsive embed-responsive-16by9">
+                    {streamDom}
+                </div>
+                <StreamInfo stream={stream} />
+            </div>
+        </Col>);
     },
 
     componentDidMount: function () {

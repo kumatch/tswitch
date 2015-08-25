@@ -18,7 +18,6 @@ class GameStore extends Marty.Store {
 
     load(top_games) {
         top_games.forEach((top_game) => {
-            console.log(top_game);
             let game = top_game.game;
             this.state.top_games[game._id] = top_game;
         });

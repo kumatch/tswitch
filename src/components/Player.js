@@ -1,21 +1,13 @@
-'use strict';
-
 import React from 'react';
 import { format } from "util";
-
-import globals from "../common/globals";
-import template from "./Player.template";
-let tmpl = template.locals(globals);
 
 class Player extends React.Component {
 
     render() {
-        let stream = this.props.stream;
-        let values = {
-            stream_id: this.__createStreamId(stream)
-        };
+        const stream = this.props.stream;
+        const stream_id = this.__createStreamId(stream);
 
-        return tmpl.call(this, values);
+        return <div id={stream_id}></div>;
     }
 
     componentDidMount() {

@@ -1,16 +1,11 @@
-'use strict';
-
 import React from "react";
 import Marty from "marty";
+import { Grid, Row } from "react-bootstrap";
 
 import Header from "./StreamHeader";
 import Stream from "./Stream";
 
 import StreamStore from "../stores/StreamStore";
-
-import globals from "../common/globals";
-import template from "./Streams.template";
-let tmpl = template.locals(globals);
 
 class Streams extends React.Component {
     render() {
@@ -21,16 +16,31 @@ class Streams extends React.Component {
             streams = this.props.streams;
         }
 
-        let values = {
-            client: client,
-            game_name: client.select_game,
-            streams: streams,
+        let headerDOM, nameDOM, streamsDOM;
+        if (streams.length) {
+            headerDOM = <Header client={client} />;
+        }
 
-            Header: Header,
-            Stream: Stream
-        };
+        if (client.select_game) {
+            nameDOM = <h2 style={{ fontWeight: "normal", fontSize: "30px" }}>{client.select_game}</h2>;
+        }
 
-        return tmpl.call(this, values);
+        const items = streams.map((stream) => {
+            return <Stream key={"streams-" + stream._id} client={client} stream={stream} endScrollTimeout={300} />;
+        });
+
+        if (items.length) {
+            streamsDOM = <Row>{items}</Row>;
+        }
+
+
+        return (<div>
+            {headerDOM}
+            <Grid fluid style={{ padding: "40px 20px" }}>
+                {nameDOM}
+                {streamsDOM}
+            </Grid>
+        </div>);
     }
 }
 

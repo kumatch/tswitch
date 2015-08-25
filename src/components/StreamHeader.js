@@ -1,20 +1,35 @@
-'use strict';
-
 import React from 'react';
 
 import clientActionCreators from "../actions/clientActionCreators";
 
-import globals from "../common/globals";
-import template from "./StreamHeader.template";
-let tmpl = template.locals(globals);
-
 class StreamHeader extends React.Component {
     render() {
-        let values = {
-            client: this.props.client
-        };
+        const client = this.props.client;
+        const menuIconName = client.display_menu ? "glyphicon-triangle-left" : "glyphicon-triangle-right";
 
-        return tmpl.call(this, values);
+        return (<div className="streams-header">
+            <div className="pull-left streams-header-col">
+                <a className="menu-switch" onClick={this.onToggleMenu.bind(this)}>
+                    <span className={"glyphicon " + menuIconName}></span>
+                </a>
+            </div>
+            <div className="pull-left streams-header-col">
+                <div className="checkbox checkbox-inline checkbox-primary" onClick={this.onToggleAutoPlay.bind(this)}>
+                    <input type="checkbox" checked={client.auto_play} readOnly />
+                    <label>
+                        <b>Auto play</b>
+                    </label>
+                </div>
+            </div>
+            <div className="pull-left streams-header-col">
+                <div className="checkbox checkbox-inline checkbox-primary" onClick={this.onToggleMixSounds.bind(this)}>
+                    <input type="checkbox" checked={client.mix_sounds} readOnly />
+                    <label>
+                        <b>Mix sounds</b>
+                    </label>
+                </div>
+            </div>
+        </div>);
     }
 
     onToggleMenu() {

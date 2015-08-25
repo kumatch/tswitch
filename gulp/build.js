@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 var jade = require('gulp-jade');
 var babel = require("gulp-babel");
-var reactJade = require('gulp-react-jade');
 var watch = require("gulp-watch");
 var watchify = require('gulp-watchify');
 var babelify = require('babelify');
@@ -21,8 +20,7 @@ gulp.task("build", function (callback) {
 
 gulp.task("build:common", [
     'build:js',
-    'build:html',
-    'build:react-jade'
+    'build:html'
 ]);
 
 gulp.task('build:clean', function (callback) {
@@ -52,16 +50,6 @@ gulp.task('build:html', function() {
         }))
         .pipe(gulp.dest("public"))
         .pipe(livereload());
-});
-
-gulp.task('build:react-jade', function () {
-    var templates = [
-        "src/**/*.template.jade"
-    ];
-
-    return gulp.src(templates)
-        .pipe(reactJade())
-        .pipe(gulp.dest('build'));
 });
 
 
@@ -101,10 +89,6 @@ gulp.task('watch', function () {
 
         watch([ "templates/**/*.jade" ], function () {
             gulp.start("build:html");
-        });
-
-        watch([ "src/**/*.template.jade" ], function () {
-            gulp.start("build:react-jade");
         });
     });
 });

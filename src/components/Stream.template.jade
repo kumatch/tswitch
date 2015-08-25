@@ -1,8 +1,0 @@
-Col(md=6)
-  div(className=selected ? "stream-selected" : "stream", onMouseDown=this.onSelect)
-    div(style="backgroundColor: #777; width: 100%").embed-responsive.embed-responsive-16by9
-      if play
-        Player(ref="player", stream=stream, sound=selected ? true : false)
-      else if preview
-        Preview(ref="preview", image=image)
-    StreamInfo(stream=stream)

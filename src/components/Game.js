@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react/addons';
 import ReactMixin from "react-mixin";
 import { Link } from "react-router-component";
@@ -9,28 +7,23 @@ import Viewers from "./Viewers";
 import clientActionCreators from "../actions/clientActionCreators";
 import streamActionCreators from "../actions/streamActionCreators";
 
-import globals from "../common/globals";
-import template from "./Game.template";
-let tmpl = template.locals(globals);
-
 class Game extends React.Component {
     render() {
-        let client = this.props.client;
-        let game = this.props.game;
+        const game = this.props.game;
+        const viewers = this.props.viewers;
 
-        let values = {
-            game: this.props.game,
-            viewers: this.props.viewers,
-            channels: this.props.channels,
-            selected: client.isSelectedGame(game.name),
+        const href = "/games/" + game.name;
 
-            Link: Link,
-            Viewers: Viewers
-        };
-
-        return tmpl.call(this, values);
+        return (<Link className="game-menu" href={href} onClick={this.onSelect.bind(this)}>
+          <img className="game-image" src={game.box.small} />
+          <div className="game-info">
+            <div className="title">{game.name}</div>
+            <div className="viewers">
+              <Viewers value={viewers} />
+            </div>
+          </div>
+        </Link>);
     }
-
 
     componentDidMount() {
         let client = this.props.client;
@@ -41,7 +34,7 @@ class Game extends React.Component {
         }
     }
 
-    onSelect(e) {
+    onSelect() {
         streamActionCreators.for(this).loadGameStreams(this.props.game);
     }
 }
