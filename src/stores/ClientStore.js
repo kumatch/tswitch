@@ -66,7 +66,7 @@ class ClientStore extends Marty.Store {
         if (typeof auto_play !== "undefined") {
             auto_play = parseInt(auto_play) || 0;
         } else {
-            auto_play = 1;
+            auto_play = 0;
         }
 
 
